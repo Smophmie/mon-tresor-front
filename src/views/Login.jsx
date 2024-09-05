@@ -1,41 +1,34 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
 import '../style/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); 
-  const navigate = useNavigate(); 
-  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:8000/api/login', {
-      email,
-      password,
-    })
-    .then(response => {
-      console.log(response);
-
-      login();
+    try {
+      const response = await axios.post('http://localhost:8000/api/login', {
+        email,
+        password,
+      });
 
       const { token } = response.data;
 
+      // Store the token in localStorage
       localStorage.setItem('token', token);
 
-      console.log('Login successful:', response.data);
-
-
+      // Redirect to home page
       navigate('/');
-    })
-    .catch(error => {
-      setError(error.response?.data?.message || 'An error occurred while logging in.');
-      console.error('Error logging in:', error.response?.data || error.message);
-    });
+    } catch (error) {
+      setError(error.response?.data?.message || 'Une erreur est survenue lors de la connexion.');
+      console.error('Erreur lors de la connexion:', error.response?.data || error.message);
+    }
   };
 
   return (
@@ -64,8 +57,7 @@ const Login = () => {
             className="input input-bordered w-full bg-inherit"
           />
 
-            <button type="submit">Connexion</button>
-          
+          <button type="submit" className="btn-submit">Connexion</button>
         </form>
       </div>
     </div>
