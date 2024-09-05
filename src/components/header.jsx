@@ -34,7 +34,7 @@ const Header = () => {
                     {isAuthenticated && <li><Link to="/" className="">Mon compte</Link></li>}
                     {isAuthenticated && <li><Link to="/" className="">Me déconnecter</Link></li>}
                     {!isAuthenticated && <li><Link to="/login" className="">Me connecter</Link></li>}
-                    {!isAuthenticated && <li><Link to="/" className="">Créer un compte</Link></li>}
+                    {!isAuthenticated && <li><Link to="/register" className="">Créer un compte</Link></li>}
                 </ul>
                 </div>
                 <Link to="/" className="btn-ghost">
@@ -56,7 +56,7 @@ const Header = () => {
                 <ul class="menu menu-horizontal px-1">
                     {isAuthenticated && <li><Link to="/" className="">Me déconnecter</Link></li>}
                     {!isAuthenticated && <li><Link to="/login" className="">Me connecter</Link></li>}
-                    {!isAuthenticated && <li><Link to="/" className="">Créer un compte</Link></li>}
+                    {!isAuthenticated && <li><Link to="/register" className="">Créer un compte</Link></li>}
                 </ul>
             </div>
             </div>

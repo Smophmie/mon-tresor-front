@@ -5,6 +5,7 @@ import { AuthProvider } from './AuthContext';
 import Homepage from './views/Homepage';
 import Login from './views/Login';
 import Header from './components/header';
+import Register from './views/Register';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Homepage />}></Route>
+          <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
         </Routes>
         {/* <Footer /> */}
