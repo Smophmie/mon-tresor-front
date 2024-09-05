@@ -78,6 +78,7 @@ const Transactions = () => {
             <tr>
               <th className="px-4 py-2 border-b text-center">Nom</th>
               <th className="px-4 py-2 border-b text-center">Type</th>
+              <th className="px-4 py-2 border-b text-center">Description</th>
               <th className="px-4 py-2 border-b text-center">Montant</th>
               <th className="px-4 py-2 border-b text-center">Date</th>
               <th className="px-4 py-2 border-b text-center">Actions</th>
@@ -90,6 +91,7 @@ const Transactions = () => {
                 <td className="px-4 py-2 border-b text-center">
                   {formatTransactionType(transaction.type)}
                 </td>
+                <td className="px-4 py-2 border-b text-center">{transaction.description}</td>
                 <td className={`px-4 py-2 border-b text-center ${transaction.type === 'expense' ? 'text-red-500' : 'text-green-500'}`}>
                   {transaction.amount} €
                 </td>
