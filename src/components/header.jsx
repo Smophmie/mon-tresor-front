@@ -33,7 +33,7 @@ const Header = () => {
                     {isAuthenticated && <li><Link to="/" className="">Mes transactions</Link></li>}
                     {isAuthenticated && <li><Link to="/" className="">Mon compte</Link></li>}
                     {isAuthenticated && <li><Link to="/" className="">Me déconnecter</Link></li>}
-                    {!isAuthenticated && <li><Link to="/" className="">Me connecter</Link></li>}
+                    {!isAuthenticated && <li><Link to="/login" className="">Me connecter</Link></li>}
                     {!isAuthenticated && <li><Link to="/" className="">Créer un compte</Link></li>}
                 </ul>
                 </div>
@@ -55,7 +55,7 @@ const Header = () => {
             <div class="navbar-end">
                 <ul class="menu menu-horizontal px-1">
                     {isAuthenticated && <li><Link to="/" className="">Me déconnecter</Link></li>}
-                    {!isAuthenticated && <li><Link to="/" className="">Me connecter</Link></li>}
+                    {!isAuthenticated && <li><Link to="/login" className="">Me connecter</Link></li>}
                     {!isAuthenticated && <li><Link to="/" className="">Créer un compte</Link></li>}
                 </ul>
             </div>
