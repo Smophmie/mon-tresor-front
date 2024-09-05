@@ -51,7 +51,7 @@ const Header = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li><Link to="/" className="">Accueil</Link></li>
-              {isAuthenticated && <li><Link to="/" className="">Mes transactions</Link></li>}
+              {isAuthenticated && <li><Link to="/transactions" className="">Mes transactions</Link></li>}
               {isAuthenticated && <li><Link to="/" className="">Mon compte</Link></li>}
               {isAuthenticated && (
                 <li>
@@ -75,7 +75,7 @@ const Header = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li><Link to="/" className="">Accueil</Link></li>
-            {isAuthenticated && <li><Link to="/" className="">Mes transactions</Link></li>}
+            {isAuthenticated && <li><Link to="/transactions" className="">Mes transactions</Link></li>}
             {isAuthenticated && <li><Link to="/" className="">Mon compte</Link></li>}
           </ul>
         </div>
