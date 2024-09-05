@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 // Créez le contexte
 const AuthContext = createContext();
@@ -24,4 +24,9 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export { AuthContext, AuthProvider };
+// Créez le hook useAuth
+const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+export { AuthContext, AuthProvider, useAuth };
