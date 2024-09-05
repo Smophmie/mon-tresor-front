@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 // Créez le contexte
 const AuthContext = createContext();
@@ -6,6 +7,30 @@ const AuthContext = createContext();
 // Créez un fournisseur de contexte
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await axios.get('/api/user', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (response.status === 200) {
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+          }
+        } catch (error) {
+          setIsAuthenticated(false);
+        }
+      } else {
+        setIsAuthenticated(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   const login = () => {
     // Logique de connexion

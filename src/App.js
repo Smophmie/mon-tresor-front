@@ -1,16 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './AuthContext';
 import Homepage from './views/Homepage';
 import Login from './views/Login';
 import Header from './components/header';
 import Register from './views/Register';
 import Transactions from './views/Transactions';
+import HomepageConnectedUser from './components/HomepageForConnectedUser';
 
 function App() {
   return (
-    <AuthProvider>
       <Router>
         <Header />
         <Routes>
@@ -21,7 +20,6 @@ function App() {
         </Routes>
         {/* <Footer /> */}
       </Router>
-    </AuthProvider>
   );
 }
 

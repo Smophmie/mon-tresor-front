@@ -1,9 +1,15 @@
-// import Card from "../components/Card";
+import React from 'react';
+import HomepageConnectedUser from "../components/HomepageForConnectedUser";
 
 const Homepage = () => {
-    return <>
-    <h1>Hello !</h1>
-        {/* <Card /> */}
-    </>
+    const isAuthenticated = !!localStorage.getItem('token');
+
+    return (
+        <>
+            <h1>Hello !</h1>
+            {isAuthenticated && <HomepageConnectedUser />}
+        </>
+    );
 };
+
 export default Homepage;

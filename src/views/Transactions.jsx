@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Link, UseNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
 import '../style/Transactions.css';
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    const token = localStorage.getItem('token');
+
+    if (token) {
       fetchTransactions();
+    } else {
+      // Rediriger si l'utilisateur n'est pas connecté
+      navigate('/login');
     }
-  }, [isAuthenticated]);
+  }, []);
 
   const fetchTransactions = async () => {
     try {
@@ -35,10 +37,6 @@ const Transactions = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return <div>Vous devez être connecté pour voir vos transactions.</div>;
-  }
-
   if (loading) {
     return <div>Chargement des transactions...</div>;
   }
@@ -52,28 +50,28 @@ const Transactions = () => {
   };
 
   const handleEdit = (id) => {
-    navigate(`http://localhost:8000/transactions/edit/${id}`);
+    navigate(`/transactions/edit/${id}`);
   };
 
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`http://localhost:8000/api/transactions/${id}`, {
-                headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-            setTransactions(transactions.filter(transaction => transaction.id !== id));
-            } catch (error) {
-            setError('Erreur lors de la suppression de la transaction.');
-            }
+  const handleDelete = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:8000/api/transactions/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTransactions(transactions.filter(transaction => transaction.id !== id));
+    } catch (error) {
+      setError('Erreur lors de la suppression de la transaction.');
     }
-
+  }
 
   return (
     <div className="container-transaction">
       <h1>Mes transactions</h1>
       <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+        <table className="min-w-full bg-white border border-gray-200 rounded-lg">
           <thead>
             <tr>
               <th className="px-4 py-2 border-b text-center">Nom</th>
@@ -105,7 +103,7 @@ const Transactions = () => {
                   </button>
                   <button
                     onClick={() => handleDelete(transaction.id)}
-                    className="hover:underline"
+                    className="hover:underline ml-4"
                   >
                     Supprimer
                   </button>

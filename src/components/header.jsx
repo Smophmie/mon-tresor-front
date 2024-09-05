@@ -1,27 +1,29 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
 import axios from 'axios';
 import '../style/Header.css';
 
 const Header = () => {
-  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+
+  const isAuthenticated = !!localStorage.getItem('token');
 
   const handleLogout = async () => {
     console.log('Déconnexion en cours...');
     try {
-        const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token');
+      if (token) {
         const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         };
         await axios.post('http://localhost:8000/api/logout', {}, config);
-        logout();
+        localStorage.removeItem('token');
         navigate('/');
+      }
     } catch (error) {
-        console.error('Erreur lors de la déconnexion', error);
+      console.error('Erreur lors de la déconnexion', error);
     }
   };
 
