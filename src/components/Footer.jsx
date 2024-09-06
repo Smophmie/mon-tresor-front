@@ -42,7 +42,7 @@ const Footer = ({ isAuthenticated, onLogout }) => {
           <ul className="menu menu-horizontal px-1">
           <li><Link to="/" className="">Accueil</Link></li>
             {isAuthenticated && <li><Link to="/transactions" className="">Mes transactions</Link></li>}
-            {isAuthenticated && <li><Link to="/" className="">Mon compte</Link></li>}
+            {isAuthenticated && <li><Link to="/account" className="">Mon compte</Link></li>}
             <li><Link to="/" className="">Mentions légales</Link></li>
             <li><Link to="/" className="">Contact</Link></li>
           </ul>

@@ -53,7 +53,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
             >
               <li><Link to="/" className="">Accueil</Link></li>
               {isAuthenticated && <li><Link to="/transactions" className="">Mes transactions</Link></li>}
-              {isAuthenticated && <li><Link to="/" className="">Mon compte</Link></li>}
+              {isAuthenticated && <li><Link to="/account" className="">Mon compte</Link></li>}
               {isAuthenticated && (
                 <li>
                   <button onClick={handleLogout} className="">
@@ -77,7 +77,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
           <ul className="menu menu-horizontal px-1">
             <li><Link to="/" className="">Accueil</Link></li>
             {isAuthenticated && <li><Link to="/transactions" className="">Mes transactions</Link></li>}
-            {isAuthenticated && <li><Link to="/" className="">Mon compte</Link></li>}
+            {isAuthenticated && <li><Link to="/account" className="">Mon compte</Link></li>}
           </ul>
         </div>
         <div className="navbar-end">
