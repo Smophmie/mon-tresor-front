@@ -1,13 +1,12 @@
 import React from 'react';
 import HomepageConnectedUser from "../components/HomepageForConnectedUser";
+import HomepageForNonConnectedUser from '../components/HompageForNonConnectedUser';
 
 const Homepage = ({ isAuthenticated }) => {
   return (
-    <div>
-      <h1>Hello !</h1>
-      <div style={{margin:'60px'}}>
-        {isAuthenticated && <HomepageConnectedUser />}
-        </div>
+    <div style={{margin:'60px'}}>
+      {isAuthenticated && <HomepageConnectedUser />}
+      {!isAuthenticated && <HomepageForNonConnectedUser />}
     </div>
   );
 };
