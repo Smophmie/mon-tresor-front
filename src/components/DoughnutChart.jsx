@@ -23,7 +23,8 @@ const DoughnutChart = ({ data }) => {
   };
 
   return (
-    <div style={{ width: '30%', height: '300px', margin: '0 auto' }}>
+    <div 
+    className='w-1/3 bg-white p-6 rounded-lg shadow-md'>
       <h1>Répartition des dépenses</h1>
       <Doughnut
         data={doughnutData}
