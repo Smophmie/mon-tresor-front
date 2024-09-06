@@ -1,26 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/header';
 import Homepage from './views/Homepage';
 import Login from './views/Login';
-import Header from './components/header';
 import Register from './views/Register';
 import Transactions from './views/Transactions';
-import HomepageConnectedUser from './components/HomepageForConnectedUser';
+import Footer from './components/Footer';
 
-function App() {
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
   return (
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Homepage />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/transactions" element={<Transactions />}></Route>
-        </Routes>
-        {/* <Footer /> */}
-      </Router>
+    <Router>
+      <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      <Routes>
+        <Route path="/" element={<Homepage isAuthenticated={isAuthenticated} />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/transactions" element={<Transactions />} />
+      </Routes>
+      <Footer isAuthenticated={isAuthenticated} onLogout={handleLogout}/>
+    </Router>
   );
-}
+};
 
 export default App;

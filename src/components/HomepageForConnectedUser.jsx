@@ -62,7 +62,7 @@ const HomepageConnectedUser = () => {
   }, []);
 
   if (loading) {
-    return <div>LChargement en cours...</div>;
+    return <div>Chargement en cours...</div>;
   }
 
   if (error) {

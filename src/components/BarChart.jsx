@@ -20,66 +20,58 @@ ChartJS.register(
 );
 
 const BarChart = ({ earningsData, expensesData }) => {
-  // Combine earnings and expenses data
+  // Combine the labels (months) to make sure they are the same for both datasets
+  const combinedLabels = [...new Set([...earningsData.labels, ...expensesData.labels])].sort();
+  
+  // Align the data with the combined labels
+  const alignedEarningsData = combinedLabels.map(label => {
+    const dataIndex = earningsData.labels.indexOf(label);
+    return dataIndex !== -1 ? earningsData.datasets[0].data[dataIndex] : 0;
+  });
+
+  const alignedExpensesData = combinedLabels.map(label => {
+    const dataIndex = expensesData.labels.indexOf(label);
+    return dataIndex !== -1 ? expensesData.datasets[0].data[dataIndex] : 0;
+  });
+
   const combinedData = {
-    labels: earningsData.labels || [],
+    labels: combinedLabels,
     datasets: [
       {
         label: 'Gains',
-        data: earningsData.datasets?.[0]?.data || [],
+        data: alignedEarningsData,
         backgroundColor: '#2271ce',
-        stack: 'stack1',
       },
       {
         label: 'Dépenses',
-        data: expensesData.datasets?.[0]?.data || [],
+        data: alignedExpensesData,
         backgroundColor: '#600684',
-        stack: 'stack1',
       }
     ],
   };
 
-  // Log data to debug
-  console.log('Earnings Data:', earningsData);
-  console.log('Expenses Data:', expensesData);
-  console.log('Combined Data:', combinedData);
-
   return (
-    <div style={{ width: '80%', height: '400px', margin: '0 auto' }}>
-      <h1>Mon historique des transactions</h1>
+    <div className="chart-container">
+      <h1>Mon historique</h1>
       <Bar
         data={combinedData}
         options={{ 
           responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: function(tooltipItem) {
-                  return `${tooltipItem.dataset.label}: ${tooltipItem.raw} €`;
-                }
-              }
-            }
-          },
           scales: {
             x: { 
-              stacked: true,
-              type: 'category',
+              stacked: false, 
               title: {
                 display: true,
-                text: 'Date'
+                text: 'Mois'
               }
             },
             y: { 
-              stacked: true,
+              stacked: false, 
               title: {
                 display: true,
-                text: 'Montant (€)'
-              },
-              beginAtZero: true
-            }
+                text: 'Montant'
+              }
+            },
           },
         }}
       />

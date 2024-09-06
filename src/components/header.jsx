@@ -3,10 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../style/Header.css';
 
-const Header = () => {
+const Header = ({ isAuthenticated, onLogout }) => {
   const navigate = useNavigate();
-
-  const isAuthenticated = !!localStorage.getItem('token');
 
   const handleLogout = async () => {
     console.log('Déconnexion en cours...');
@@ -20,6 +18,7 @@ const Header = () => {
         };
         await axios.post('http://localhost:8000/api/logout', {}, config);
         localStorage.removeItem('token');
+        onLogout(); // Notify parent component of logout
         navigate('/');
       }
     } catch (error) {
@@ -29,7 +28,7 @@ const Header = () => {
 
   return (
     <header>
-      <div className="navbar">
+      <div className="navbar navbar-header">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex="0" role="button" className="btn btn-ghost lg:hidden">

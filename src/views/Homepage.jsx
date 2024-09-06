@@ -1,15 +1,13 @@
 import React from 'react';
 import HomepageConnectedUser from "../components/HomepageForConnectedUser";
 
-const Homepage = () => {
-    const isAuthenticated = !!localStorage.getItem('token');
-
-    return (
-        <>
-            <h1>Hello !</h1>
-            {isAuthenticated && <HomepageConnectedUser />}
-        </>
-    );
+const Homepage = ({ isAuthenticated }) => {
+  return (
+    <div>
+      <h1>Hello !</h1>
+      {isAuthenticated && <HomepageConnectedUser />}
+    </div>
+  );
 };
 
 export default Homepage;
