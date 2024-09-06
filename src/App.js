@@ -6,6 +6,7 @@ import Login from './views/Login';
 import Register from './views/Register';
 import Transactions from './views/Transactions';
 import Footer from './components/Footer';
+import AddTransaction from './views/AddTransaction';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/transactions" element={<Transactions />} />
+        <Route path="/add-transaction" element={<AddTransaction />} />
       </Routes>
       <Footer isAuthenticated={isAuthenticated} onLogout={handleLogout}/>
     </Router>

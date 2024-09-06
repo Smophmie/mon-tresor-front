@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../style/Transactions.css';
 
 const Transactions = () => {
@@ -70,6 +70,9 @@ const Transactions = () => {
   return (
     <div className="container-transaction">
       <h1>Mes transactions</h1>
+      <button className="">
+        <Link to='/add-transaction'>Ajouter une transaction</Link>
+      </button>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg">
           <thead>

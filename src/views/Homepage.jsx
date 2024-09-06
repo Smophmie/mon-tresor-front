@@ -5,7 +5,9 @@ const Homepage = ({ isAuthenticated }) => {
   return (
     <div>
       <h1>Hello !</h1>
-      {isAuthenticated && <HomepageConnectedUser />}
+      <div style={{margin:'50px'}}>
+        {isAuthenticated && <HomepageConnectedUser />}
+        </div>
     </div>
   );
 };

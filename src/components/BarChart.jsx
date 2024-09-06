@@ -51,7 +51,7 @@ const BarChart = ({ earningsData, expensesData }) => {
   };
 
   return (
-    <div className="chart-container">
+    <div style={{ width: '40%', height: '300px', margin: '0 auto' }}>
       <h1>Mon historique</h1>
       <Bar
         data={combinedData}
