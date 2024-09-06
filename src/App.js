@@ -7,6 +7,7 @@ import Register from './views/Register';
 import Transactions from './views/Transactions';
 import Footer from './components/Footer';
 import AddTransaction from './views/AddTransaction';
+import EditTransaction from './views/EditTransaction';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/add-transaction" element={<AddTransaction />} />
+        <Route path="/edit-transaction/:id" element={<EditTransaction />} />
       </Routes>
       <Footer isAuthenticated={isAuthenticated} onLogout={handleLogout}/>
     </Router>

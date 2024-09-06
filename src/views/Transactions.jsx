@@ -99,10 +99,9 @@ const Transactions = () => {
                 <td className="px-4 py-2 border-b text-center">{transaction.date}</td>
                 <td className="px-4 py-2 border-b text-center">
                   <button
-                    onClick={() => handleEdit(transaction.id)}
                     className="hover:underline"
                   >
-                    Modifier
+                    <Link to={`/edit-transaction/${transaction.id}`}>Modifier</Link>
                   </button>
                   <button
                     onClick={() => handleDelete(transaction.id)}
