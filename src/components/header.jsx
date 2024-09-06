@@ -1,10 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../style/Header.css';
 
 const Header = ({ isAuthenticated, onLogout }) => {
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          };
+          const response = await axios.get('http://localhost:8000/api/isadmin', config);
+          setIsAdmin(response.data); 
+        }
+      } catch (error) {
+        console.error('Erreur lors de la vérification du statut d\'administrateur', error);
+      }
+    };
+
+    if (isAuthenticated) {
+      checkAdminStatus();
+    }
+  }, [isAuthenticated]);
 
   const handleLogout = async () => {
     console.log('Déconnexion en cours...');
@@ -18,7 +42,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
         };
         await axios.post('http://localhost:8000/api/logout', {}, config);
         localStorage.removeItem('token');
-        onLogout(); // Notify parent component of logout
+        onLogout(); 
         navigate('/');
       }
     } catch (error) {
@@ -54,6 +78,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
               <li><Link to="/" className="">Accueil</Link></li>
               {isAuthenticated && <li><Link to="/transactions" className="">Mes transactions</Link></li>}
               {isAuthenticated && <li><Link to="/account" className="">Mon compte</Link></li>}
+              {isAuthenticated && isAdmin && <li><Link to="/all-users" className="">Tous les utilisateurs</Link></li>}
               {isAuthenticated && (
                 <li>
                   <button onClick={handleLogout} className="">
@@ -78,6 +103,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
             <li><Link to="/" className="">Accueil</Link></li>
             {isAuthenticated && <li><Link to="/transactions" className="">Mes transactions</Link></li>}
             {isAuthenticated && <li><Link to="/account" className="">Mon compte</Link></li>}
+            {isAuthenticated && isAdmin && <li><Link to="/all-users" className="">Tous les utilisateurs</Link></li>}
           </ul>
         </div>
         <div className="navbar-end">
