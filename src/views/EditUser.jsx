@@ -8,12 +8,28 @@ const EditUser = () => {
   const [email, setEmail] = useState('');
   const [admin, setAdmin] = useState(false);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/login');
+          return;
+        }
+
+        const adminResponse = await axios.get('http://localhost:8000/api/isadmin', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setIsAdmin(adminResponse.data);
+
+        if (!adminResponse.data) {
+          navigate('/');
+          return;
+        }
+
         const response = await axios.get(`http://localhost:8000/api/users/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -22,12 +38,12 @@ const EditUser = () => {
         setEmail(email);
         setAdmin(admin);
       } catch (err) {
-        setError('Erreur lors du chargement de l\'utilisateur.');
+        setError('Erreur lors du chargement des données utilisateur.');
       }
     };
 
-    fetchUser();
-  }, [id]);
+    fetchUserData();
+  }, [id, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +62,10 @@ const EditUser = () => {
     }
   };
 
+  if (!isAdmin) {
+    return;
+  }
+
   return (
     <div className="container">
       <h1 className='text-xl'>Modifier l'utilisateur</h1>
@@ -63,7 +83,7 @@ const EditUser = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">E-mail</label>
           <input
             type="email"
             id="email"
